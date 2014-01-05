@@ -12,14 +12,14 @@ public abstract class DAO {
 
   // database gegevens, zonodig aanpassen 
   
-	private static final String DATABASE_URL = "jdbc:firebirdsql://localhost/C:/Users/pjd/Desktop/OUNL/Openstaand/Propedeuseproject/propproj.fdb";
-	  private static final String DATABASE_USER = "sysdba";
-	  private static final String DATABASE_PASSWORD = "masterkey";
+//	private static final String DATABASE_URL = "jdbc:firebirdsql://localhost/C:/Users/pjd/Desktop/OUNL/Openstaand/Propedeuseproject/propproj.fdb";
+//	  private static final String DATABASE_USER = "sysdba";
+//	  private static final String DATABASE_PASSWORD = "masterkey";
 	  private static final String DRIVERNAME = "org.firebirdsql.jdbc.FBDriver";
   
-//  private static final String DATABASE_URL = "jdbc:firebirdsql://www.ntwpracticumnet.ou.nl/d:/inetpub/wwwroot/propedeuseproject/databases/propprojXXX.fdb";
-//  private static final String DATABASE_USER = "PROPPROJECT";
-//  private static final String DATABASE_PASSWORD = "student";
+  private static final String DATABASE_URL = "jdbc:firebirdsql://www.ntwpracticumnet.ou.nl/d:/inetpub/wwwroot/propedeuseproject/databases/propprojPDE.fdb";
+  private static final String DATABASE_USER = "PROPPROJECT";
+  private static final String DATABASE_PASSWORD = "student";
   
   
   // de database connection
