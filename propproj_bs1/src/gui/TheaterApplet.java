@@ -48,7 +48,7 @@ public class TheaterApplet extends JApplet {
    * 
    */
   public void init() {
-    this.setSize(650, 650);
+    this.setSize(570, 600);
     this.setContentPane(getJContentPane());
     mijnInit();
   }
@@ -88,7 +88,9 @@ public class TheaterApplet extends JApplet {
     }
     if (jTabbedPane == null) {
       jTabbedPane = new JTabbedPane();
-      jTabbedPane.setBounds(new Rectangle(20, 20, 620, 620));
+//      jTabbedPane.setBounds(new Rectangle(20, 20, 620, 620));
+      jTabbedPane.setBounds(new Rectangle(10, 10, 550, 580));
+
       
       jTabbedPane.insertTab("login/loguit", null, new LoginPanel(contr), "",
           LOGIN);
