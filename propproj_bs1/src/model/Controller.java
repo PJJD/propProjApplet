@@ -3,6 +3,8 @@ package model;
 
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
@@ -60,8 +62,7 @@ public class Controller  {
 //      JOptionPane.showMessageDialog(null,  "Verbinding maken gelukt","OK",
 //          JOptionPane.INFORMATION_MESSAGE);
       contr.getVoorstellingen();
-      contr.getUitvoeringen();
-      System.out.println(contr.getZaalbezetting());
+      System.out.println(contr.getUitvoeringen());
      
     }
     catch (TheaterException e) {
@@ -91,9 +92,23 @@ public class Controller  {
   
   public ArrayList<Uitvoering> getUitvoeringen() {
 	  ArrayList<Uitvoering> uitvoeringLijst = null;
+	  ArrayList<Uitvoering> uitvoeringenToekomst = new ArrayList<Uitvoering>();
 	  uitvoeringLijst = voorstelling.getUitvoeringen();
 	  uitvoering = (Uitvoering) uitvoeringLijst.toArray()[0];
-	  return uitvoeringLijst;
+	  for (Uitvoering u :uitvoeringLijst) {
+		  SimpleDateFormat df = new SimpleDateFormat("dd-mm-yyyy HH:mm");
+		  Date vandaag = new Date();
+		  Date datumUitvoering = null;
+		  try {
+			  datumUitvoering = df.parse(u.toString());
+		  } catch (Exception e) {
+			  e.printStackTrace();
+		  }
+		  if (datumUitvoering.after(vandaag)) {
+			  uitvoeringenToekomst.add(u);
+		  }
+	  }
+	  return uitvoeringenToekomst;
   }
   
   public ArrayList<Plaats> getZaalbezetting() {

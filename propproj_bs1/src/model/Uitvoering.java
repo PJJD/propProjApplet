@@ -33,8 +33,16 @@ public class Uitvoering {
 	  this.datum = datum;
   }
   
+  public String getDatum() {
+	  return this.datum;
+  }
+  
   public void setTijd(String tijd) {
 	  this.tijd = tijd;
+  }
+  
+  public String getTijd() {
+	  return this.tijd;
   }
   
   public void setVoorstelling(Voorstelling voorstelling) {
@@ -47,7 +55,7 @@ public class Uitvoering {
   
   
   public String toString() {
-	  return this.datum;
+	  return this.datum + " " + this.tijd;
   }
   
   public String getUitvoeringInfo() {
