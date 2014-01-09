@@ -94,21 +94,27 @@ public class Controller  {
 	  ArrayList<Uitvoering> uitvoeringLijst = null;
 	  ArrayList<Uitvoering> uitvoeringenToekomst = new ArrayList<Uitvoering>();
 	  uitvoeringLijst = voorstelling.getUitvoeringen();
-	  uitvoering = (Uitvoering) uitvoeringLijst.toArray()[0];
 	  for (Uitvoering u :uitvoeringLijst) {
-		  SimpleDateFormat df = new SimpleDateFormat("dd-mm-yyyy HH:mm");
+		  SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		  Date vandaag = new Date();
 		  Date datumUitvoering = null;
 		  try {
+			  System.out.println(u.toString());
 			  datumUitvoering = df.parse(u.toString());
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }
-		  if (datumUitvoering.after(vandaag)) {
+		  System.out.println(datumUitvoering);
+		  if (datumUitvoering.compareTo(vandaag) >= 0) {
 			  uitvoeringenToekomst.add(u);
+			  System.out.println("Tonen");
+		  } else {
+			  System.out.println("Niet tonen");
 		  }
 	  }
-	  return uitvoeringenToekomst;
+	  uitvoering = (Uitvoering) uitvoeringenToekomst.toArray()[0];
+	  //return uitvoeringenToekomst;
+	  return uitvoeringLijst;
   }
   
   public ArrayList<Plaats> getZaalbezetting() {
