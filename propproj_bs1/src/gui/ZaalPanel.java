@@ -76,13 +76,13 @@ public class ZaalPanel extends JPanel {
   private void initialize() {
 
     rang2Label = new JLabel();
-    rang2Label.setBounds(new Rectangle(6, 303, 50, 19));
+    rang2Label.setBounds(new Rectangle(6, 240, 50, 19));
     rang2Label.setText("rang 2");
     rang1Label = new JLabel();
-    rang1Label.setBounds(new Rectangle(8, 207, 51, 15));
+    rang1Label.setBounds(new Rectangle(8, 147, 51, 15));
     rang1Label.setText("rang 1");
     podiumLabel = new JLabel();
-    podiumLabel.setBounds(new Rectangle(128, 87, 352, 85));
+    podiumLabel.setBounds(new Rectangle(128, 50, 352, 85));
     podiumLabel.setBackground(new Color(255, 255, 204));
     podiumLabel.setFont(new Font("Wide Latin", Font.BOLD, 24));
     podiumLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -94,7 +94,7 @@ public class ZaalPanel extends JPanel {
     uitvoeringnaamLabel
         .setText("Zaalbezetting voor <naam en datum>  (dus de geselecteerde uitvoering)");
     infoLabel = new JLabel();
-    infoLabel.setBounds(new Rectangle(13, 513, 235, 30));
+    infoLabel.setBounds(new Rectangle(13, 453, 235, 30));
     infoLabel.setText("Selecteer de gewenste plaatsen");
     this.setLayout(null);
     this.setSize(600, 600);
@@ -124,7 +124,7 @@ public class ZaalPanel extends JPanel {
       plaatsenPanel = new JPanel();
       plaatsenPanel.setPreferredSize(new Dimension(-1, 4));
       plaatsenPanel.setLayout(gridLayout1);
-      plaatsenPanel.setBounds(new Rectangle(63, 183, 470, 324));
+      plaatsenPanel.setBounds(new Rectangle(63, 123, 470, 324));
     }
     return plaatsenPanel;
   }
@@ -137,7 +137,7 @@ public class ZaalPanel extends JPanel {
   private JButton getBevestigSelectieKnop() {
     if (bevestigSelectieKnop == null) {
       bevestigSelectieKnop = new JButton();
-      bevestigSelectieKnop.setBounds(new Rectangle(267, 513, 133, 30));
+      bevestigSelectieKnop.setBounds(new Rectangle(267, 453, 163, 30));
       bevestigSelectieKnop.setText("bevestig selectie");
       }
     return bevestigSelectieKnop;
