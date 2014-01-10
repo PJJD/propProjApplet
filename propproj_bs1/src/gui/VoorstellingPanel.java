@@ -117,9 +117,11 @@ public class VoorstellingPanel extends JPanel {
 
   class VoorstellingSelectionListener implements ListSelectionListener {
 	  public void valueChanged(ListSelectionEvent e) {
-		  Voorstelling voorstelling = (Voorstelling) voorstellingList.getSelectedValue();
-		  contr.setVoorstelling(voorstelling);
-		  updateUitvoeringList();
+		  if(!e.getValueIsAdjusting()) {
+			  Voorstelling voorstelling = (Voorstelling) voorstellingList.getSelectedValue();
+			  contr.setVoorstelling(voorstelling);
+			  updateUitvoeringList();
+		  }
 	  }
   }
   
@@ -157,8 +159,10 @@ public class VoorstellingPanel extends JPanel {
 
   class UitvoeringSelectionListener implements ListSelectionListener {
 	  public void valueChanged(ListSelectionEvent e) {
-		  Uitvoering uitvoering = (Uitvoering) uitvoeringList.getSelectedValue();
-		  contr.setUitvoering(uitvoering);
+		  if(!e.getValueIsAdjusting()) {
+			  Uitvoering uitvoering = (Uitvoering) uitvoeringList.getSelectedValue();
+			  contr.setUitvoering(uitvoering);
+		  }
 	  }
   }
  

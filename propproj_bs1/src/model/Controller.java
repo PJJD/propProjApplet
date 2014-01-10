@@ -101,7 +101,6 @@ public class Controller  {
 
 	  for (Uitvoering u :uitvoeringLijst) {
 		  try {
-			  System.out.println(u.toString());
 			  datumUitvoering = df.parse(u.toString());
 		  } catch (Exception e) {
 			  JOptionPane.showMessageDialog(null,  e.getMessage(), "Ophalen uitvoeringen mislukt", 

@@ -1,15 +1,24 @@
 package gui;
 
 import java.awt.Color;
+
 import javax.swing.JPanel;
+
 import model.Controller;
+
 import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
+
+import db.TheaterException;
+
 import java.awt.Button;
 
 import model.Plaats;
@@ -42,6 +51,11 @@ public class ZaalPanel extends JPanel {
    */
   public ZaalPanel() {
     super();
+    try {
+    	this.contr = new Controller();
+    } catch (TheaterException e) {
+    	e.printStackTrace();
+    }
     initialize();
   }
 
@@ -103,8 +117,8 @@ public class ZaalPanel extends JPanel {
     if (plaatsenPanel == null) {
       GridLayout gridLayout1 = new GridLayout();
       // geef zelf het aantal rijen en stoelen op 
-      gridLayout1.setRows(15);
-      gridLayout1.setColumns(10);
+      gridLayout1.setRows(contr.getAantalRijen());
+      gridLayout1.setColumns(contr.getAantalStoelenPerRij());
       gridLayout1.setHgap(HGAP);
       gridLayout1.setVgap(VGAP);
       plaatsenPanel = new JPanel();
