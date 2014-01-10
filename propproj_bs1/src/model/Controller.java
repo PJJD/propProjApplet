@@ -2,20 +2,15 @@ package model;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
-import db.PlaatsDAO;
-import db.TheaterException;
 import db.TheaterDAO;
+import db.TheaterException;
 import db.VoorstellingDAO;
-import model.Voorstelling;
-import model.Uitvoering;
-import model.Plaats;
-import model.Theater;
 
 
 /**
@@ -29,6 +24,7 @@ public class Controller  {
   private Uitvoering uitvoering = null; // huidige uitvoering
   private Voorstelling voorstelling = null; // huidige voorstelling
   private TheaterDAO dao = null;
+  private Klant klant = null;
    
 
   public Uitvoering getUitvoering() {
