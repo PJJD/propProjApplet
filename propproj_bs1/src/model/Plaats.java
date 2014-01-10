@@ -61,8 +61,8 @@ public class Plaats {
 	  return this.gereserveerd;
   }
   
-  public void setGereserveerd(boolean gereserveerd) {
-	  this.gereserveerd = gereserveerd;
+  public void setGereserveerd(boolean nieuweWaarde) {
+	  this.gereserveerd = nieuweWaarde;
   }
   
   public String toString() {

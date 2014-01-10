@@ -1,13 +1,23 @@
 package gui;
 
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Rectangle;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+
 import model.Controller;
+import model.Klant;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * GUI-klasse die de mogelijkheid om in/uit te loggen
@@ -98,9 +108,23 @@ public class LoginPanel extends JPanel {
       loginOKButton = new JButton();
       loginOKButton.setText("Log in ");
       loginOKButton.setBounds(new Rectangle(94, 114, 134, 25));
-      
+      loginOKButton.addActionListener(new loginButtonListener());
     }
     return loginOKButton;
+  }
+  
+  class loginButtonListener implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+		  String gebruikersnaam = getUserTextField().getText();
+		  String wachtwoord = getPasswordField().getText();
+		  contr.logKlantIn(gebruikersnaam, wachtwoord);
+		  if (contr.getKlant() != null) {
+			 toggleLoginLoguitKnop(); 
+		  } else {
+		      JOptionPane.showMessageDialog(null,  "Inloggen mislukt, combinatie van gebruikersnaam en wachtwoord bestaat niet in het klantenbestand","Fout bij inloggen",
+	          JOptionPane.INFORMATION_MESSAGE);
+		  }
+	  }
   }
 
   
@@ -148,10 +172,19 @@ public class LoginPanel extends JPanel {
       loguitKnop.setText("Log uit");
       loguitKnop.setEnabled(false);
       loguitKnop.setToolTipText("");
+      loguitKnop.addActionListener(new loguitButtonListener());
     }
     return loguitKnop;
   }
   
+  class loguitButtonListener implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+		  contr.logKlantUit();
+		  if (contr.getKlant() == null) {
+			 toggleLoginLoguitKnop();
+		  }
+	  }
+  }
   
 
 } // @jve:decl-index=0:visual-constraint="10,8"

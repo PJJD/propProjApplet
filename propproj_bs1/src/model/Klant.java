@@ -11,6 +11,7 @@ package model;
 public class Klant {
   
 
+
   private int klantnr = 0;
   private String naam = null;
   private String straat = null;
@@ -25,5 +26,82 @@ public class Klant {
   private boolean isVasteKlant = false;
   private double seizoentotaal = 0;
   
-  
+  public int getKlantnr() {
+	  return klantnr;
+  }
+  public void setKlantnr(int klantnr) {
+	  this.klantnr = klantnr;
+  }
+  public String getNaam() {
+	  return naam;
+  }
+  public void setNaam(String naam) {
+	  this.naam = naam;
+  }
+  public String getStraat() {
+	  return straat;
+  }
+  public void setStraat(String straat) {
+	  this.straat = straat;
+  }
+  public String getHuisnr() {
+	  return huisnr;
+  }
+  public void setHuisnr(String huisnr) {
+	  this.huisnr = huisnr;
+  }
+  public String getPostcode() {
+	  return postcode;
+  }
+  public void setPostcode(String postcode) {
+	  this.postcode = postcode;
+  }
+  public String getTelefoon() {
+	  return telefoon;
+  }
+  public void setTelefoon(String telefoon) {
+	  this.telefoon = telefoon;
+  }
+  public String getWoonplaats() {
+	  return woonplaats;
+  }
+  public void setWoonplaats(String woonplaats) {
+	  this.woonplaats = woonplaats;
+  }
+  public String getMobiel() {
+	  return mobiel;
+  }
+  public void setMobiel(String mobiel) {
+	  this.mobiel = mobiel;
+  }
+  public String getEmail() {
+	  return email;
+  }
+  public void setEmail(String email) {
+	  this.email = email;
+  }
+  public String getGebruikersnaam() {
+	  return gebruikersnaam;
+  }
+  public void setGebruikersnaam(String gebruikersnaam) {
+	  this.gebruikersnaam = gebruikersnaam;
+  }
+  public String getWachtwoord() {
+	  return wachtwoord;
+  }
+  public void setWachtwoord(String wachtwoord) {
+	  this.wachtwoord = wachtwoord;
+  }
+  public boolean isVasteKlant() {
+	  return isVasteKlant;
+  }
+  public void setVasteKlant(boolean isVasteKlant) {
+	  this.isVasteKlant = isVasteKlant;
+  }
+  public double getSeizoentotaal() {
+	  return seizoentotaal;
+  }
+  public void setSeizoentotaal(double seizoentotaal) {
+	  this.seizoentotaal = seizoentotaal;
+  } 
 }

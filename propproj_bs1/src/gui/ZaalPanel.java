@@ -20,6 +20,8 @@ import javax.swing.SwingConstants;
 import db.TheaterException;
 
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import model.Plaats;
 
@@ -146,16 +148,38 @@ public class ZaalPanel extends JPanel {
   public void mijnUpdate() {
 	  uitvoeringnaamLabel.setText("Zaalbezetting voor " + contr.getVoorstellingInfo() + " op " + contr.getUitvoeringInfo());
 	  plaatsenPanel.removeAll();
+	  
+	  class plaatsButtonListener implements ActionListener {
+		  public void actionPerformed(ActionEvent e) {
+			  Button b = (Button) e.getSource();
+			  togglePlaats(b);
+		  }
+	  }
+	  
+	  
 	  for (Plaats p: contr.getZaalbezetting()) {
 		  Button b = new Button(""+p.getPlaatsnr());
 		  if (p.getBezet()) {
 			  b.setBackground(Color.RED);
+			  b.setEnabled(false);
 		  } else if (p.getGereserveerd()) {
 			  b.setBackground(Color.YELLOW);
+			  b.addActionListener(new plaatsButtonListener());
 		  } else {
 			  b.setBackground(Color.GREEN);
+			  b.addActionListener(new plaatsButtonListener());
 		  }
 		  plaatsenPanel.add(b);
+	  }
+	  
+  }
+  
+  public void togglePlaats(Button b) {
+	  contr.togglePlaats(Integer.parseInt(b.getLabel()));
+	  if (b.getBackground() == Color.YELLOW) {
+		  b.setBackground(Color.GREEN);
+	  } else {
+		  b.setBackground(Color.YELLOW);
 	  }
   }
 

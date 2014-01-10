@@ -8,9 +8,12 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import db.KlantDAO;
+import db.BestellingDAO;
 import db.TheaterDAO;
 import db.TheaterException;
 import db.VoorstellingDAO;
+
 
 
 /**
@@ -19,13 +22,13 @@ import db.VoorstellingDAO;
  * @author Mederwerker OU
  * 
  */
-public class Controller  {
+public class Controller {
 
   private Uitvoering uitvoering = null; // huidige uitvoering
   private Voorstelling voorstelling = null; // huidige voorstelling
   private TheaterDAO dao = null;
-  private Klant klant = null;
-   
+  private Klant klant = null; // aangelogde klant
+  private Winkelwagen winkelwagen = null; 
 
   public Uitvoering getUitvoering() {
 	  return this.uitvoering;
@@ -58,8 +61,7 @@ public class Controller  {
       Controller contr = new Controller();
 //      JOptionPane.showMessageDialog(null,  "Verbinding maken gelukt","OK",
 //          JOptionPane.INFORMATION_MESSAGE);
-      contr.getVoorstellingen();
-      System.out.println(contr.getUitvoeringen());
+      contr.logKlantIn("testpj", "testpj");
      
     }
     catch (TheaterException e) {
@@ -140,6 +142,37 @@ public class Controller  {
   public int getAantalStoelenPerRij() {
 	  int stoelenPerRij = Theater.getStoelenPerRij();
 	  return stoelenPerRij;
+  }
+  
+  public Klant getKlant() {
+	  return klant;
+  }
+  
+  public void logKlantIn(String gebruikersnaam, String wachtwoord) {  
+	  try {
+		  KlantDAO kdao = KlantDAO.getInstance();
+		  klant = kdao.logIn(gebruikersnaam, wachtwoord);
+	  } catch (TheaterException e) {
+		  JOptionPane.showMessageDialog(null, e.getMessage(), "Inloggen mislukt",
+				  JOptionPane.ERROR_MESSAGE);
+		  e.printStackTrace();
+	  }
+  }
+  
+  public void logKlantUit() {
+	  klant = null;
+  }
+  
+  public void togglePlaats(int stoelnr) {
+	  try {
+		  Plaats p = (Plaats) uitvoering.getZaalbezetting().toArray()[stoelnr-1];
+		  System.out.println(p);
+		  System.out.println(p.getGereserveerd());
+		  p.setGereserveerd(!p.getGereserveerd());
+		  System.out.println("Stoel nr " + p.getPlaatsnr() + " gereserveerd? " + p.getGereserveerd());
+	  } catch (TheaterException e) {
+		  e.printStackTrace();
+	  }
   }
   
   // Einde toegevoegde code
