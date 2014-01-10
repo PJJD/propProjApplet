@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import db.PlaatsDAO;
+import db.TheaterException;
+
 /**
  * Klasse die een Uitvoering representeert
  * 
@@ -18,7 +21,7 @@ public class Uitvoering {
   
   public Uitvoering() {
 	  super();
-	  this.zaalbezetting = new ArrayList<Plaats>();
+	  this.setZaalbezetting(new ArrayList<Plaats>());
   }
   
   public void setUitvoeringnr(int nr) {
@@ -54,6 +57,16 @@ public class Uitvoering {
   }
   
   
+  public ArrayList<Plaats> getZaalbezetting() throws TheaterException {
+	PlaatsDAO pdao = PlaatsDAO.getInstance();
+	zaalbezetting = pdao.getZaalbezetting(this);
+	return zaalbezetting;
+  }
+
+  public void setZaalbezetting(ArrayList<Plaats> zaalbezetting) {
+	this.zaalbezetting = zaalbezetting;
+  }
+
   public String toString() {
 	  return this.datum + " " + this.tijd;
   }

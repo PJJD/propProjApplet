@@ -15,6 +15,7 @@ import db.VoorstellingDAO;
 import model.Voorstelling;
 import model.Uitvoering;
 import model.Plaats;
+import model.Theater;
 
 
 /**
@@ -28,7 +29,7 @@ public class Controller  {
   private Uitvoering uitvoering = null; // huidige uitvoering
   private Voorstelling voorstelling = null; // huidige voorstelling
   private TheaterDAO dao = null;
- 
+   
 
   public Uitvoering getUitvoering() {
 	  return this.uitvoering;
@@ -94,34 +95,32 @@ public class Controller  {
 	  ArrayList<Uitvoering> uitvoeringLijst = null;
 	  ArrayList<Uitvoering> uitvoeringenToekomst = new ArrayList<Uitvoering>();
 	  uitvoeringLijst = voorstelling.getUitvoeringen();
+	  Date vandaag = new Date();
+	  Date datumUitvoering = null;
+	  SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
 	  for (Uitvoering u :uitvoeringLijst) {
-		  SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		  Date vandaag = new Date();
-		  Date datumUitvoering = null;
 		  try {
 			  System.out.println(u.toString());
 			  datumUitvoering = df.parse(u.toString());
 		  } catch (Exception e) {
+			  JOptionPane.showMessageDialog(null,  e.getMessage(), "Ophalen uitvoeringen mislukt", 
+		              JOptionPane.ERROR_MESSAGE);
 			  e.printStackTrace();
 		  }
-		  System.out.println(datumUitvoering);
-		  if (datumUitvoering.compareTo(vandaag) >= 0) {
+		  
+		  if (datumUitvoering.after(vandaag)) {
 			  uitvoeringenToekomst.add(u);
-			  System.out.println("Tonen");
-		  } else {
-			  System.out.println("Niet tonen");
 		  }
 	  }
 	  uitvoering = (Uitvoering) uitvoeringenToekomst.toArray()[0];
-	  //return uitvoeringenToekomst;
-	  return uitvoeringLijst;
+	  return uitvoeringenToekomst;
   }
   
   public ArrayList<Plaats> getZaalbezetting() {
 	  ArrayList<Plaats> zaalbezetting = null;
 	  try {
-		  PlaatsDAO pdao = PlaatsDAO.getInstance();
-		  zaalbezetting = pdao.getZaalbezetting(uitvoering);
+		  zaalbezetting = uitvoering.getZaalbezetting();
 	  } catch (TheaterException e) {
 		  JOptionPane.showMessageDialog(null, e.getMessage(), "Ophalen plaatsen mislukt",
 				  JOptionPane.ERROR_MESSAGE);
@@ -139,12 +138,12 @@ public class Controller  {
   }
   
   public int getAantalRijen() {
-	  int rijen = 15; // Dit moet op termijn door TheaterDAO opgehaald worden.
+	  int rijen = Theater.getAantalRijen();
 	  return rijen;
   }
   
   public int getAantalStoelenPerRij() {
-	  int stoelenPerRij = 10; // Dit moet op termijn door TheaterDAO opgehaald worden.
+	  int stoelenPerRij = Theater.getStoelenPerRij();
 	  return stoelenPerRij;
   }
   

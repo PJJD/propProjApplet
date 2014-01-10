@@ -88,7 +88,6 @@ public class TheaterApplet extends JApplet {
     }
     if (jTabbedPane == null) {
       jTabbedPane = new JTabbedPane();
-//      jTabbedPane.setBounds(new Rectangle(20, 20, 620, 620));
       jTabbedPane.setBounds(new Rectangle(10, 10, 550, 580));
 
       
