@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JCheckBox;
 
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
@@ -28,7 +30,7 @@ import javax.swing.JCheckBox;
  * @author Medewerker OU
  *
  */
-public class WinkelwagenPanel extends JPanel {
+public class WinkelwagenPanel extends JPanel implements Observer {
 
   private Controller contr = null;
   private static final long serialVersionUID = 1L;
@@ -49,7 +51,7 @@ public class WinkelwagenPanel extends JPanel {
   public WinkelwagenPanel(Controller contr) {
     this();
     this.contr = contr;
-
+    contr.addObserver(this);
   }
 
   /**
@@ -128,6 +130,9 @@ public class WinkelwagenPanel extends JPanel {
     return idealBox;
   }
 
+  public void update(Observable obs, Object obj) {
+	  System.out.println("Winkelwagen geupdated");
+  }
 
 
 }  
