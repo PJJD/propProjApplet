@@ -1,13 +1,22 @@
 package gui;
 
 import javax.swing.JPanel;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Rectangle;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import model.Controller;
+
 
 /**
  * GUI-klasse die de mogelijkheid om in/uit te loggen
@@ -98,9 +107,19 @@ public class LoginPanel extends JPanel {
       loginOKButton = new JButton();
       loginOKButton.setText("Log in ");
       loginOKButton.setBounds(new Rectangle(94, 114, 134, 25));
-      
+      loginOKButton.addActionListener(new LoginListener()); 
     }
     return loginOKButton;
+  }
+  
+  class LoginListener implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+		  String gebruikersnaam = userTextField.getText();
+		  String wachtwoord = passwordField.getText();
+		  if (contr.logKlantIn(gebruikersnaam, wachtwoord)) {
+			  toggleLoginLoguitKnop();
+		  }
+	  }
   }
 
   
@@ -121,15 +140,17 @@ public class LoginPanel extends JPanel {
    */
   private JPanel getLoginInfoPanel() {
     if (loginInfoPanel == null) {
+      userTextField = getUserTextField();
+      passwordField = getPasswordField();
       loginInfoPanel = new JPanel();
       loginInfoPanel.setLayout(null);
       loginInfoPanel.setBounds(new Rectangle(32, 67, 240, 164));
       loginInfoPanel.setVisible(true);
       loginInfoPanel.setEnabled(false);
-      loginInfoPanel.add(getUserTextField(), null);
+      loginInfoPanel.add(userTextField, null);
       loginInfoPanel.add(userLabel, null);
       loginInfoPanel.add(passwordLabel, null);
-      loginInfoPanel.add(getPasswordField(), null);
+      loginInfoPanel.add(passwordField, null);
       loginInfoPanel.add(getLoginOKButton(), null);
       loginInfoPanel.add(getLoguitKnop(), null);
     }

@@ -4,6 +4,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observer;
+import java.util.Observable;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
@@ -24,10 +26,11 @@ import model.Theater;
  * @author Mederwerker OU
  * 
  */
-public class Controller  {
+public class Controller extends Observable  {
 
   private Uitvoering uitvoering = null; // huidige uitvoering
   private Voorstelling voorstelling = null; // huidige voorstelling
+  private Winkelwagen winkelwagen = null;
   private TheaterDAO dao = null;
    
 
@@ -84,7 +87,7 @@ public class Controller  {
 		  voorstellingen = vdao.getVoorstellingen();
 		  voorstelling = (Voorstelling) voorstellingen.toArray()[0];
 	  } catch (TheaterException e) {
-	      JOptionPane.showMessageDialog(null,  e.getMessage(), "Ophalen voorstellingen mislukt", 
+		  JOptionPane.showMessageDialog(null,  e.getMessage(), "Ophalen voorstellingen mislukt", 
 	              JOptionPane.ERROR_MESSAGE);
 	          e.printStackTrace();
 	  }
@@ -144,6 +147,28 @@ public class Controller  {
   public int getAantalStoelenPerRij() {
 	  int stoelenPerRij = Theater.getStoelenPerRij();
 	  return stoelenPerRij;
+  }
+  
+  public boolean logKlantIn(String gebruikersnaam, String wachtwoord) {
+	  try {
+		  winkelwagen = new Winkelwagen(gebruikersnaam, wachtwoord);
+	  } catch (TheaterException e) {
+		  JOptionPane.showMessageDialog(null, e.getMessage(), "Inloggen mislukt",
+				  JOptionPane.ERROR_MESSAGE);
+		  e.printStackTrace();
+	  }
+	  if (winkelwagen.getKlant() != null) {
+		  setChanged();
+		  notifyObservers();
+		  return true;
+	  }
+	  JOptionPane.showMessageDialog(null, "Mogelijk is er een foute gebruikersnaam en/of wachtwoord opgegeven", "Inloggen mislukt",
+			  JOptionPane.ERROR_MESSAGE);
+	  return false;
+  }
+  
+  public String getKlantNaam() {
+	  return winkelwagen.getKlant().getNaam();
   }
   
   // Einde toegevoegde code

@@ -1,5 +1,10 @@
 package model;
 
+import javax.swing.JOptionPane;
+
+import db.KlantDAO;
+import db.TheaterException;
+
 
 
 /**
@@ -104,4 +109,11 @@ public class Klant {
   public void setSeizoentotaal(double seizoentotaal) {
 	  this.seizoentotaal = seizoentotaal;
   } 
+  
+  public static Klant getKlant(String gebruikersnaam, String wachtwoord) throws TheaterException {
+	  Klant klant = null;
+	  KlantDAO kdao = KlantDAO.getInstance();
+	  klant = kdao.logIn(gebruikersnaam, wachtwoord);
+	  return klant;
+  }
 }

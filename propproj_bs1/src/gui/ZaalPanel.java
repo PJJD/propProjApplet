@@ -22,6 +22,8 @@ import db.TheaterException;
 import java.awt.Button;
 
 import model.Plaats;
+import java.util.Observer;
+import java.util.Observable;
 
 /**
  * GUI-klasse, toont zaalbezetting bij een uitvoering en biedt mogelijkheid om
@@ -30,7 +32,7 @@ import model.Plaats;
  * @author Mederwerker OU
  * 
  */
-public class ZaalPanel extends JPanel {
+public class ZaalPanel extends JPanel implements Observer {
 
   private int HGAP = 2;
   private int VGAP = 4;
@@ -45,6 +47,7 @@ public class ZaalPanel extends JPanel {
   private JLabel podiumLabel = null;
   private JLabel rang1Label = null;
   private JLabel rang2Label = null;
+  private JLabel klantLabel = null;
 
   /**
    * This is the default constructor
@@ -62,6 +65,7 @@ public class ZaalPanel extends JPanel {
   public ZaalPanel(Controller contr) {
     this();
     this.contr = contr;
+    contr.addObserver(this);
   }
   
   public void mijnInit() {
@@ -93,6 +97,9 @@ public class ZaalPanel extends JPanel {
     uitvoeringnaamLabel.setFont(new Font("Dialog", Font.BOLD, 14));
     uitvoeringnaamLabel
         .setText("Zaalbezetting voor <naam en datum>  (dus de geselecteerde uitvoering)");
+    klantLabel = new JLabel();
+    klantLabel.setBounds(new Rectangle(20, 10, 525, 15));
+    klantLabel.setFont(new Font("Dialog", Font.PLAIN, 11));
     infoLabel = new JLabel();
     infoLabel.setBounds(new Rectangle(13, 453, 235, 30));
     infoLabel.setText("Selecteer de gewenste plaatsen");
@@ -101,6 +108,7 @@ public class ZaalPanel extends JPanel {
     this.setBackground(new Color(255, 255, 204));
     this.add(getPlaatsenPanel(), null);
     this.add(infoLabel, null);
+    this.add(klantLabel);
     this.add(getBevestigSelectieKnop(), null);
     this.add(uitvoeringnaamLabel, null);
     this.add(podiumLabel, null);
@@ -142,6 +150,11 @@ public class ZaalPanel extends JPanel {
       }
     return bevestigSelectieKnop;
   }
+  
+  public void update(Observable obs, Object obj) {
+	  klantLabel.setText("Welkom, " + contr.getKlantNaam());
+  }
+  
   
   public void mijnUpdate() {
 	  uitvoeringnaamLabel.setText("Zaalbezetting voor " + contr.getVoorstellingInfo() + " op " + contr.getUitvoeringInfo());
