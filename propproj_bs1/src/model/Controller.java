@@ -40,6 +40,8 @@ public class Controller extends Observable  {
   
   public void setUitvoering(Uitvoering uitvoering) {
 	  this.uitvoering = uitvoering;
+	  setChanged();
+	  notifyObservers();
   }
   
   public Voorstelling getVoorstelling() {
@@ -168,7 +170,13 @@ public class Controller extends Observable  {
   }
   
   public String getKlantNaam() {
-	  return winkelwagen.getKlant().getNaam();
+	  String klantnaam ="";
+	  try {
+		  klantnaam = winkelwagen.getKlant().getNaam();
+	  } catch (NullPointerException e) {
+		  //e.printStackTrace();
+	  }
+	  return klantnaam;
   }
   
   // Einde toegevoegde code

@@ -95,13 +95,6 @@ public class TheaterApplet extends JApplet {
       jTabbedPane.insertTab("voorstelling", null, new VoorstellingPanel(contr),"",TOONVOORSTELLINGEN);
       jTabbedPane.insertTab("zaal", null, new ZaalPanel(contr),"",TOONZAAL);
       jTabbedPane.insertTab("winkelwagen", null, new WinkelwagenPanel(contr),"",TOONWINKELWAGEN);
-      jTabbedPane.addChangeListener(new ChangeListener() {
-    	  public void stateChanged(ChangeEvent e) {
-    		  if (jTabbedPane.getSelectedIndex() == TOONZAAL) {
-    			  ((ZaalPanel) jTabbedPane.getSelectedComponent()).mijnUpdate();
-    		  }
-    	  }
-      });
     }
     return jTabbedPane;
   }

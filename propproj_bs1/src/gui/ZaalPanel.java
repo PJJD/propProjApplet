@@ -24,6 +24,7 @@ import java.awt.Button;
 import model.Plaats;
 import java.util.Observer;
 import java.util.Observable;
+import java.util.ArrayList;
 
 /**
  * GUI-klasse, toont zaalbezetting bij een uitvoering en biedt mogelijkheid om
@@ -152,24 +153,39 @@ public class ZaalPanel extends JPanel implements Observer {
   }
   
   public void update(Observable obs, Object obj) {
-	  klantLabel.setText("Welkom, " + contr.getKlantNaam());
+	  String klantnaam = contr.getKlantNaam();
+	  if (klantnaam != "") {
+		  klantLabel.setText("Welkom, " + klantnaam);
+	  };
+	  mijnUpdate();
   }
   
   
   public void mijnUpdate() {
-	  uitvoeringnaamLabel.setText("Zaalbezetting voor " + contr.getVoorstellingInfo() + " op " + contr.getUitvoeringInfo());
-	  plaatsenPanel.removeAll();
-	  for (Plaats p: contr.getZaalbezetting()) {
-		  Button b = new Button(""+p.getPlaatsnr());
-		  if (p.getBezet()) {
-			  b.setBackground(Color.RED);
-		  } else if (p.getGereserveerd()) {
-			  b.setBackground(Color.YELLOW);
-		  } else {
-			  b.setBackground(Color.GREEN);
-		  }
-		  plaatsenPanel.add(b);
+	  try {
+		  uitvoeringnaamLabel.setText("Zaalbezetting voor " + contr.getVoorstellingInfo() + " op " + contr.getUitvoeringInfo());
+	  } catch (NullPointerException e) {
+		  uitvoeringnaamLabel.setText("Geen uitvoering geselecteerd");
 	  }
+	  plaatsenPanel.removeAll();
+	  ArrayList<Plaats> plaatsen = null;
+	  try {
+		  plaatsen = contr.getZaalbezetting();
+	  } catch (NullPointerException e) {
+	  }
+	  if (plaatsen != null) {
+		for (Plaats p : plaatsen) {
+			Button b = new Button("" + p.getPlaatsnr());
+			if (p.getBezet()) {
+				b.setBackground(Color.RED);
+			} else if (p.getGereserveerd()) {
+				b.setBackground(Color.YELLOW);
+			} else {
+				b.setBackground(Color.GREEN);
+			}
+			plaatsenPanel.add(b);
+		}
+	}
   }
 
 } // @jve:decl-index=0:visual-constraint="10,7"
