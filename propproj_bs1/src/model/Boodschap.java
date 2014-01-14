@@ -16,7 +16,10 @@ public class Boodschap {
   private Uitvoering uitvoering = null;
   private ArrayList<Plaats> gereserveerdePlaatsen = new ArrayList<Plaats>();
 
-
+  public Boodschap(Uitvoering u, ArrayList<Plaats> plaatsen) {
+	  this.uitvoering = u;
+	  this.gereserveerdePlaatsen = plaatsen;
+  }
   
   
 

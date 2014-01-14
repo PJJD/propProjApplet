@@ -14,7 +14,13 @@ public class Winkelwagen {
   private Klant klant = null;
   private ArrayList<Boodschap> boodschappen = new ArrayList<Boodschap>();
 
-
+  public Winkelwagen(Klant k) {
+	  this.klant = k;
+  }
+  
+  public void boodschapToevoegen(Boodschap b) {
+	  boodschappen.add(b);
+  }
   
  //Klasse BestellingDAO maakt gebruik van onderstaande methode. 
  
