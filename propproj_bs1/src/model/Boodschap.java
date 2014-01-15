@@ -22,7 +22,9 @@ public class Boodschap {
   }
   
   
-
+  public String toString() {
+	  return uitvoering.getVoorstelling() + " " + uitvoering + " (" + gereserveerdePlaatsen.size() + ")";
+  }
  
 
 }

@@ -131,7 +131,8 @@ public class WinkelwagenPanel extends JPanel implements Observer {
   }
 
   public void update(Observable obs, Object obj) {
-	  System.out.println("Winkelwagen geupdated");
+	  String boodschappen = contr.getBoodschappenlijst();
+	  this.bestelArea.setText(boodschappen);
   }
 
 

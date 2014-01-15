@@ -14,7 +14,7 @@ public class Theater {
   private static double minimumbedrag = 0;
   private static int vasteklantkorting = 0;
 
-  private static int maxPerUitvoering = 0;
+  private static int maxPerUitvoering = 6;
 
   
   

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import db.BestellingDAO;
 import db.TheaterException;
 import db.KlantDAO;
 
@@ -57,7 +58,17 @@ public class Winkelwagen {
     return -1;
   }
 
-
+  public int aantalKaarten(Uitvoering uitvoering) {
+	  int aantal = 0;
+	  try {
+	  BestellingDAO bdao = BestellingDAO.getInstance();
+	  bdao.aantalKaarten(uitvoering, klant);
+	  } catch (TheaterException e) {
+		  e.printStackTrace();
+	  }
+	  aantal += uitvoering.aantalGereserveerd();
+	  return aantal;
+  }
   
 
  

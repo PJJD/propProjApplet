@@ -123,14 +123,14 @@ public class Controller extends Observable  {
   
   public ArrayList<Plaats> getZaalbezetting() {
 	  ArrayList<Plaats> zaalbezetting = null;
-	  try {
-		  zaalbezetting = uitvoering.getZaalbezetting();
-	  } catch (TheaterException e) {
-		  JOptionPane.showMessageDialog(null, e.getMessage(), "Ophalen plaatsen mislukt",
-				  JOptionPane.ERROR_MESSAGE);
-		  e.printStackTrace();
-	  }
-	  return zaalbezetting;
+		try {
+			zaalbezetting = uitvoering.getZaalbezetting();
+		} catch (TheaterException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),
+					"Ophalen plaatsen mislukt", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	return zaalbezetting;
   }
   
   public String getVoorstellingInfo() {
@@ -179,6 +179,42 @@ public class Controller extends Observable  {
 	  return klantnaam;
   }
   
+  public void reserveerStoel(int plaatsnr) {
+	  boolean gereserveerd = false;
+	  int aantal = 0;
+	  int maximum = Theater.getMaxPerUitvoering();
+	  if (winkelwagen != null) {
+		  gereserveerd = uitvoering.reedsGereserveerd(plaatsnr);
+		  aantal = winkelwagen.aantalKaarten(uitvoering);
+		  if (gereserveerd || (aantal < maximum)) {
+			  uitvoering.reserveerStoel(plaatsnr);
+		  } else {
+			  JOptionPane.showMessageDialog(null, "Per klant kan er een maximum van " + maximum + " kaarten per uitvoering gereserveerd worden", "Maximum overschreden",
+					  JOptionPane.ERROR_MESSAGE);
+		  }
+	  } else {
+		  JOptionPane.showMessageDialog(null, "U dient eerst in te loggen om plaatsen te kunnen reserveren", "Niet ingelogd",
+				  JOptionPane.ERROR_MESSAGE);
+	  }
+	  setChanged();
+	  notifyObservers();
+  }
+  
+  public void bevestigSelectie() {
+	  ArrayList<Plaats> gereserveerdePlaatsen = uitvoering.getGereserveerdePlaatsen();
+	  Boodschap boodschap = new Boodschap(uitvoering, gereserveerdePlaatsen);
+	  winkelwagen.boodschapToevoegen(boodschap);
+	  setChanged();
+	  notifyObservers();
+  }
+  
+  public String getBoodschappenlijst() {
+	  String boodschappenlijst = "";
+	  for (Boodschap b: winkelwagen.getBoodschappen()) {
+		  boodschappenlijst += b.toString() + "\n";
+	  }
+	  return boodschappenlijst;
+  }
   // Einde toegevoegde code
   
   
