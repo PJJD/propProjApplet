@@ -210,10 +210,23 @@ public class Controller extends Observable  {
   
   public String getBoodschappenlijst() {
 	  String boodschappenlijst = "";
+	  try {
 	  for (Boodschap b: winkelwagen.getBoodschappen()) {
 		  boodschappenlijst += b.toString() + "\n";
 	  }
+	  } catch (NullPointerException e) {
+		  
+	  }
 	  return boodschappenlijst;
+  }
+  
+  public double berekenPrijs() {
+	  double prijs = 0;
+	  try {
+		  prijs = winkelwagen.berekenprijs();
+	  } catch (NullPointerException e) {
+	  }
+	  return prijs;
   }
   // Einde toegevoegde code
   

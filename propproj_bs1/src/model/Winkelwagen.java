@@ -54,9 +54,6 @@ public class Winkelwagen {
    * Berekent de prijs van deze winkelwagen, inclusief eventuele korting
    * @return de prijs
    */
-  public double berekenprijs()  {
-    return -1;
-  }
 
   public int aantalKaarten(Uitvoering uitvoering) {
 	  int aantal = 0;
@@ -69,6 +66,17 @@ public class Winkelwagen {
 	  aantal += uitvoering.aantalGereserveerd();
 	  return aantal;
   }
+  
+  public double berekenprijs() {
+	  double totaal = 0;
+	  for (Boodschap b: boodschappen) {
+		  totaal += b.getTotaal();
+	  }
+	  //TODO: Korting berekenen
+	  return totaal;
+  }
+  
+ 
   
 
  

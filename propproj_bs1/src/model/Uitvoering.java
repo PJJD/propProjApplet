@@ -17,7 +17,7 @@ public class Uitvoering {
   private String tijd = null;
   
   private Voorstelling voorstelling = null;
-  private ArrayList<Plaats> zaalbezetting = null;
+  private ArrayList<Plaats> zaalbezetting = new ArrayList<Plaats>();
   
   public Uitvoering() {
 	  super();
@@ -120,6 +120,8 @@ public class Uitvoering {
 	  return gereserveerdePlaatsen;
   }
 
-  
+  public double getRangPrijs(String rang) {
+	  return voorstelling.getRangprijs(rang);
+  }
   
 }

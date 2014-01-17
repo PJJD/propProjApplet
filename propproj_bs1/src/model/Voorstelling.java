@@ -55,8 +55,13 @@ public class Voorstelling {
    * @return prijs 
    */
   public double getRangprijs(String rang) {
-    //TODO implementeer deze methode zodra je die nodig hebt 
-    return 0; 
+    Rang r = null;
+    for (Rang ra: prijzen) {
+    	if (ra.getNaam() == rang) {
+    		r = ra;
+    	}
+    }
+    return r.getPrijs();
    }
   
   // De klasse VoorstellingsDAO maakt gebruik van de onderstaande methode:
