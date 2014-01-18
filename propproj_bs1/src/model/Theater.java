@@ -11,10 +11,10 @@ public class Theater {
   private static int aantalRijen = 15;
   private static int stoelenPerRij = 10;
 
-  private static double minimumbedrag = 250.0;
-  private static int vasteklantkorting = 10;
+  private static double minimumbedrag = 0;
+  private static int vasteklantkorting = 0;
 
-  private static int maxPerUitvoering = 6;
+  private static int maxPerUitvoering = 0;
 
   
   

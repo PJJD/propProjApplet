@@ -22,17 +22,7 @@ public class Boodschap {
   }
   
   
-  public String toString() {
-	  return uitvoering.getVoorstelling() + " " + uitvoering + " (" + gereserveerdePlaatsen.size() + ")";
-  }
-  
-  public double getTotaal() {
-	  double prijs = 0;
-	  for (Plaats p: gereserveerdePlaatsen) {
-		  prijs += uitvoering.getRangPrijs(p.getRang().getNaam());
-	  }
-	  return prijs;
-  }
+
  
 
 }

@@ -131,11 +131,7 @@ public class WinkelwagenPanel extends JPanel implements Observer {
   }
 
   public void update(Observable obs, Object obj) {
-	  String boodschappen = contr.getBoodschappenlijst();
-	  String subtotaal = "______________________________\n"
-	  		+ "Subtotaal:\t\t\t\t";
-	  subtotaal += contr.berekenPrijs();
-	  this.bestelArea.setText(boodschappen);
+	  System.out.println("Winkelwagen geupdated");
   }
 
 

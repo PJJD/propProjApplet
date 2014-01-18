@@ -116,5 +116,4 @@ public class Klant {
 	  klant = kdao.logIn(gebruikersnaam, wachtwoord);
 	  return klant;
   }
-  
 }

@@ -20,8 +20,6 @@ import javax.swing.SwingConstants;
 import db.TheaterException;
 
 import java.awt.Button;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import model.Plaats;
 import java.util.Observer;
@@ -146,16 +144,10 @@ public class ZaalPanel extends JPanel implements Observer {
    * @return javax.swing.JButton
    */
   private JButton getBevestigSelectieKnop() {
-	class KlikBevestigSelectie implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			contr.bevestigSelectie();
-		}
-	}
     if (bevestigSelectieKnop == null) {
       bevestigSelectieKnop = new JButton();
       bevestigSelectieKnop.setBounds(new Rectangle(267, 453, 163, 30));
       bevestigSelectieKnop.setText("bevestig selectie");
-      bevestigSelectieKnop.addActionListener(new KlikBevestigSelectie());
       }
     return bevestigSelectieKnop;
   }
@@ -170,13 +162,6 @@ public class ZaalPanel extends JPanel implements Observer {
   
   
   public void mijnUpdate() {
-	  class KlikStoelKnop implements ActionListener {
-		  public void actionPerformed(ActionEvent e) {
-			  Button knop = (Button) e.getSource();
-			  int plaatsnr = Integer.parseInt(knop.getLabel());
-			  contr.reserveerStoel(plaatsnr);
-		  }
-	  }
 	  try {
 		  uitvoeringnaamLabel.setText("Zaalbezetting voor " + contr.getVoorstellingInfo() + " op " + contr.getUitvoeringInfo());
 	  } catch (NullPointerException e) {
@@ -198,7 +183,6 @@ public class ZaalPanel extends JPanel implements Observer {
 			} else {
 				b.setBackground(Color.GREEN);
 			}
-			b.addActionListener(new KlikStoelKnop());
 			plaatsenPanel.add(b);
 		}
 	}

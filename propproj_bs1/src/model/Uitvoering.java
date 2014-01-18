@@ -17,7 +17,7 @@ public class Uitvoering {
   private String tijd = null;
   
   private Voorstelling voorstelling = null;
-  private ArrayList<Plaats> zaalbezetting = new ArrayList<Plaats>();
+  private ArrayList<Plaats> zaalbezetting = null;
   
   public Uitvoering() {
 	  super();
@@ -58,10 +58,8 @@ public class Uitvoering {
   
   
   public ArrayList<Plaats> getZaalbezetting() throws TheaterException {
-	if (zaalbezetting.isEmpty()) {
-		PlaatsDAO pdao = PlaatsDAO.getInstance();
-		zaalbezetting = pdao.getZaalbezetting(this);
-	}
+	PlaatsDAO pdao = PlaatsDAO.getInstance();
+	zaalbezetting = pdao.getZaalbezetting(this);
 	return zaalbezetting;
   }
 
@@ -77,51 +75,8 @@ public class Uitvoering {
 	  return this.datum + " om " + this.tijd;
   }
 
-  public Plaats getPlaats(int plaatsnr) {
-	  Plaats plaats = null;
-	  for (Plaats p: zaalbezetting) {
-		  if (p.getPlaatsnr() == plaatsnr) {
-			  plaats = p;
-		  }
-	  }
-	  return plaats;
-  }
   
-  public boolean reedsGereserveerd(int plaatsnr) {
-	  Plaats p = getPlaats(plaatsnr);
-	  if (p.getGereserveerd()) {
-		  return true;
-	  }
-	  return false;
-  }
-  
-  public void reserveerStoel(int plaatsnr) {
-	  Plaats p = getPlaats(plaatsnr);
-	  p.toggleGereserveerd();
-  }
-  
-  public int aantalGereserveerd() {
-	  int aantal = 0;
-	  for (Plaats plaats: zaalbezetting) {
-		  if (plaats.getGereserveerd()) {
-			  aantal += 1;
-		  }
-	  }
-	  return aantal;
-  }
-  
-  public ArrayList<Plaats> getGereserveerdePlaatsen() {
-	  ArrayList<Plaats> gereserveerdePlaatsen = new ArrayList<Plaats>();
-	  for (Plaats plaats: zaalbezetting) {
-		  if (plaats.getGereserveerd()) {
-			  gereserveerdePlaatsen.add(plaats);
-		  }
-	  }
-	  return gereserveerdePlaatsen;
-  }
 
-  public double getRangPrijs(String rang) {
-	  return voorstelling.getRangprijs(rang);
-  }
+  
   
 }
