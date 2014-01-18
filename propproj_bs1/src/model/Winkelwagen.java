@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import db.BestellingDAO;
 import db.TheaterException;
 import db.KlantDAO;
 
@@ -58,11 +59,45 @@ public class Winkelwagen {
   }
 
 
-  
+  public void updateWinkelwagen(int plaatsnr, Uitvoering uitvoering) throws TheaterException {
+	 Boodschap boodschap = null;
+	 ArrayList<Plaats> gereserveerdePlaatsen = null;
+	 Plaats plaats = null;
+	 // Als er al een boodschap voor de huidige uitvoering in de winkelwagen zit halen we deze op
+	 for (Boodschap b: boodschappen) {
+		 if (b.getUitvoering() == uitvoering) {
+			 boodschap = b;
+		 }
+	 }
+	 // Als er nog geen boodschap voor de huidige uitvoering in de winkelwagen zit maken we deze aan
+	 if (boodschap == null) {
+		 boodschap = new Boodschap(uitvoering, new ArrayList<Plaats>());
+		 boodschappen.add(boodschap);
+	 }
+	 boodschap.update(plaatsnr);
+  }
 
- 
+  public int aantalGereserveerd(Uitvoering uitvoering) throws TheaterException {
+	  int aantalGereserveerd = 0;
+	  Boodschap boodschap = null;
+	  BestellingDAO bdao = BestellingDAO.getInstance();
+	  aantalGereserveerd = bdao.aantalKaarten(uitvoering, klant);
+	  for (Boodschap b: boodschappen) {
+		  if (b.getUitvoering() == uitvoering) {
+			  aantalGereserveerd += b.getGereserveerdePlaatsen().size();
+		  }
+	  }
 
+	  return aantalGereserveerd;
+  }
   
-  
+  public String toString() {
+	  String winkelwagen = "";
+	  for (Boodschap b: boodschappen) {
+		  winkelwagen += b.toString() + "\n";
+	  }
+	  winkelwagen += berekenprijs();
+	  return winkelwagen;
+  }
 
 }

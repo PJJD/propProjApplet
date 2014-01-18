@@ -27,6 +27,10 @@ public class Voorstelling {
 	  this.naam = naam;
   }
   
+  public String getNaam() {
+	  return this.naam;
+  }
+  
   public void setSoort(String soort) {
 	  this.soort = soort;
   }

@@ -116,6 +116,8 @@ public class LoginPanel extends JPanel {
 	  public void actionPerformed(ActionEvent e) {
 		  String gebruikersnaam = userTextField.getText();
 		  String wachtwoord = passwordField.getText();
+		  userTextField.setText("");
+		  passwordField.setText("");
 		  if (contr.logKlantIn(gebruikersnaam, wachtwoord)) {
 			  toggleLoginLoguitKnop();
 		  }

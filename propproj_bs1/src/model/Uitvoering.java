@@ -17,11 +17,10 @@ public class Uitvoering {
   private String tijd = null;
   
   private Voorstelling voorstelling = null;
-  private ArrayList<Plaats> zaalbezetting = null;
+  private ArrayList<Plaats> zaalbezetting = new ArrayList<Plaats>();
   
   public Uitvoering() {
 	  super();
-	  this.setZaalbezetting(new ArrayList<Plaats>());
   }
   
   public void setUitvoeringnr(int nr) {
@@ -58,8 +57,15 @@ public class Uitvoering {
   
   
   public ArrayList<Plaats> getZaalbezetting() throws TheaterException {
-	PlaatsDAO pdao = PlaatsDAO.getInstance();
-	zaalbezetting = pdao.getZaalbezetting(this);
+	boolean zaalIsLeeg = zaalbezetting.isEmpty();
+	if (zaalIsLeeg) {
+		try {
+			PlaatsDAO pdao = PlaatsDAO.getInstance();
+			zaalbezetting = pdao.getZaalbezetting(this);
+		} catch (TheaterException e) {
+			e.printStackTrace();
+		}
+	}
 	return zaalbezetting;
   }
 
@@ -75,8 +81,36 @@ public class Uitvoering {
 	  return this.datum + " om " + this.tijd;
   }
 
+  public void reserveerStoel(int plaatsnr) {
+	  for (Plaats p: zaalbezetting) {
+		  if (p.getPlaatsnr() == plaatsnr) {
+			 p.toggleGereserveerd();
+		  }
+	  }
+  }
   
-
+  public boolean reedsGereserveerd(int plaatsnr) {
+	  boolean reedsGereserveerd = false;
+	  for (Plaats p : zaalbezetting) {
+		  if (p.getPlaatsnr() == plaatsnr) {
+			  reedsGereserveerd = p.getGereserveerd();
+			  return reedsGereserveerd;
+		  }
+	  }
+	  return reedsGereserveerd;
+  }
+  
+  public boolean reedsBezet(int plaatsnr) {
+	  boolean reedsBezet = false;
+	  for (Plaats p : zaalbezetting) {
+		  if (p.getPlaatsnr() == plaatsnr) {
+			  reedsBezet = p.getBezet();
+			  return reedsBezet;
+		  }
+	  }
+	  return reedsBezet;
+  }
+  
   
   
 }

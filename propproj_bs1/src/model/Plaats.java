@@ -71,4 +71,9 @@ public class Plaats {
 			  + "\nPlaatsnr: " + this.plaatsnr 
 			  + "\nRang: " + this.rang.getNaam() + "\n";
   }
+  
+  public void toggleGereserveerd() {
+	  boolean nieuweWaarde = !this.gereserveerd;
+	  this.gereserveerd = nieuweWaarde;
+  }
 }

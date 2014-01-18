@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 
@@ -20,8 +21,11 @@ import javax.swing.SwingConstants;
 import db.TheaterException;
 
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import model.Plaats;
+
 import java.util.Observer;
 import java.util.Observable;
 import java.util.ArrayList;
@@ -110,7 +114,7 @@ public class ZaalPanel extends JPanel implements Observer {
     this.add(getPlaatsenPanel(), null);
     this.add(infoLabel, null);
     this.add(klantLabel);
-    this.add(getBevestigSelectieKnop(), null);
+    //this.add(getBevestigSelectieKnop(), null);
     this.add(uitvoeringnaamLabel, null);
     this.add(podiumLabel, null);
     this.add(rang1Label, null);
@@ -183,9 +187,18 @@ public class ZaalPanel extends JPanel implements Observer {
 			} else {
 				b.setBackground(Color.GREEN);
 			}
+			b.addActionListener(new PlaatsKnopAction());
 			plaatsenPanel.add(b);
 		}
 	}
+  }
+  
+  class PlaatsKnopAction implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+		  Button knop = (Button) e.getSource();
+		  int plaatsnr = Integer.parseInt(knop.getLabel());
+		  contr.reserveerStoel(plaatsnr);
+	  }
   }
 
 } // @jve:decl-index=0:visual-constraint="10,7"

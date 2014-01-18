@@ -61,24 +61,7 @@ public class Controller extends Observable  {
       dao.startTheater();
   }
   
-  // Test de verbinding  
-  public static void main(String[] args) {
-    try {
-      Controller contr = new Controller();
-//      JOptionPane.showMessageDialog(null,  "Verbinding maken gelukt","OK",
-//          JOptionPane.INFORMATION_MESSAGE);
-      contr.getVoorstellingen();
-      System.out.println(contr.getUitvoeringen());
-     
-    }
-    catch (TheaterException e) {
-      JOptionPane.showMessageDialog(null,  e.getMessage(),"Fatale fout", 
-          JOptionPane.ERROR_MESSAGE);
-      e.printStackTrace();
-    }
-    
-    
-  }
+  
   
   // Toegevoegde code
   
@@ -174,13 +157,77 @@ public class Controller extends Observable  {
 	  try {
 		  klantnaam = winkelwagen.getKlant().getNaam();
 	  } catch (NullPointerException e) {
-		  //e.printStackTrace();
 	  }
 	  return klantnaam;
   }
   
+  public void reserveerStoel(int plaatsnr) {
+	  boolean reedsGereserveerd = false;
+	  boolean reedsBezet = false;
+	  int aantal = 0;
+	  reedsGereserveerd = uitvoering.reedsGereserveerd(plaatsnr);
+	  reedsBezet = uitvoering.reedsBezet(plaatsnr);
+	  int maximum = Theater.getMaxPerUitvoering();
+	  if (winkelwagen == null) {
+		  JOptionPane.showMessageDialog(null, "U dient ingelogd te zijn als klant om plaatsen te kunnen reserveren", "Niet ingelogd",
+				  JOptionPane.ERROR_MESSAGE);
+		  return;
+	  }
+	  if (reedsBezet) {
+		  JOptionPane.showMessageDialog(null, "Deze plaats is helaas reeds bezet en kan niet meer gereserveerd worden", "Reeds bezet",
+				  JOptionPane.ERROR_MESSAGE);
+		  return;
+	  }
+	  try {
+		  aantal = winkelwagen.aantalGereserveerd(uitvoering);
+		  if (reedsGereserveerd == true || aantal <= 5) {
+			  uitvoering.reserveerStoel(plaatsnr);
+		  }
+		  if (aantal > 5 && reedsGereserveerd == false) {
+			  JOptionPane.showMessageDialog(null, "Per klant kunnen er maximaal " + maximum + " plaatsen per uitvoering gerserveerd worden", "Maximum reservaties bereikt",
+					  JOptionPane.ERROR_MESSAGE);
+		  }
+		  winkelwagen.updateWinkelwagen(plaatsnr, uitvoering);
+		  setChanged();
+		  notifyObservers();
+	  } catch (TheaterException e) {
+		  e.printStackTrace();
+	  } catch (NullPointerException e) {
+		  e.printStackTrace();
+	  }
+  }
+  
+  public String toonWinkelwagen() {
+	  try {
+		  return winkelwagen.toString();
+	  } catch (NullPointerException e) {
+		  return "";
+	  }
+  }
+  
   // Einde toegevoegde code
   
-  
+//Test de controller 
+ public static void main(String[] args) {
+   try {
+     Controller contr = new Controller();
+//     JOptionPane.showMessageDialog(null,  "Verbinding maken gelukt","OK",
+//         JOptionPane.INFORMATION_MESSAGE);
+     contr.getVoorstellingen();
+     contr.getUitvoeringen();
+     contr.uitvoering.getZaalbezetting();
+     contr.logKlantIn("testpj", "testpj");
+     contr.uitvoering.reedsGereserveerd(10);
+     contr.uitvoering.reserveerStoel(10);
+     contr.uitvoering.reedsGereserveerd(10);
+   }
+   catch (TheaterException e) {
+     JOptionPane.showMessageDialog(null,  e.getMessage(),"Fatale fout", 
+         JOptionPane.ERROR_MESSAGE);
+     e.printStackTrace();
+   }
+   
+   
+ }
 
 }
