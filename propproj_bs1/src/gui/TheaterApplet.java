@@ -55,7 +55,7 @@ public class TheaterApplet extends JApplet {
 
   private void mijnInit() {
     jTabbedPane.setSelectedIndex(TheaterApplet.TOONVOORSTELLINGEN);
-    //contr.logKlantIn("testpj", "testpj");
+    contr.logKlantIn("testpj", "testpj");
   }
 
   /**

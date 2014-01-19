@@ -205,6 +205,15 @@ public class Controller extends Observable  {
 	  }
   }
   
+  public void schrijfWinkelwagenWeg(boolean idealBetaling) {
+	  winkelwagen.schrijfWinkelwagenWeg(idealBetaling);
+	  winkelwagen = new Winkelwagen(this.winkelwagen.getKlant());
+	  setChanged();
+	  notifyObservers();
+  }
+  
+
+  
   // Einde toegevoegde code
   
 //Test de controller 
@@ -217,9 +226,6 @@ public class Controller extends Observable  {
      contr.getUitvoeringen();
      contr.uitvoering.getZaalbezetting();
      contr.logKlantIn("testpj", "testpj");
-     contr.uitvoering.reedsGereserveerd(10);
-     contr.uitvoering.reserveerStoel(10);
-     contr.uitvoering.reedsGereserveerd(10);
    }
    catch (TheaterException e) {
      JOptionPane.showMessageDialog(null,  e.getMessage(),"Fatale fout", 

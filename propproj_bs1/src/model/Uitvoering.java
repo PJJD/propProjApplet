@@ -112,5 +112,10 @@ public class Uitvoering {
   }
   
   
+  public double getPrijs(Plaats p) {
+	  String rang = p.getRang().getNaam();
+	  return voorstelling.getRangprijs(rang);
+  }
+  
   
 }

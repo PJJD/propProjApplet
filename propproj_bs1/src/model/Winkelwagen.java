@@ -19,6 +19,8 @@ public class Winkelwagen {
  
   private Klant klant = null;
   private ArrayList<Boodschap> boodschappen = new ArrayList<Boodschap>();
+  private double prijs = 0.0;
+  private double korting = 0.0;
 
   public Winkelwagen(Klant k) {
 	  this.klant = k;
@@ -48,6 +50,10 @@ public class Winkelwagen {
 	  boodschappen.add(b);
   }
   
+  public double getPrijs() {
+	  return this.prijs;
+  }
+  
  //Klasse BestellingDAO maakt gebruik van onderstaande methode. 
  
   /**
@@ -55,7 +61,28 @@ public class Winkelwagen {
    * @return de prijs
    */
   public double berekenprijs()  {
-    return -1;
+	  double kortingspercentage = Theater.getVasteklantkorting();
+	  double minimumBedrag = Theater.getMinimumbedrag();
+	  double seizoentotaal = klant.getSeizoentotaal();
+	  double uitgegeven = 0.0;
+	  double prijs = 0.0;
+	  for (Boodschap b: boodschappen) {
+		  prijs += b.berekenprijs();
+	  }
+	  uitgegeven = seizoentotaal + prijs;
+	  if (uitgegeven >= minimumBedrag) {
+		  klant.setVasteKlant(true);
+	  } else {
+		  klant.setVasteKlant(false);
+	  }
+	  
+	  if (klant.isVasteKlant()) {
+		  korting = (prijs * kortingspercentage / 100.0);
+	  } else {
+		  korting = 0.0;
+	  }
+	  this.prijs = prijs;
+	  return prijs - korting;
   }
 
 
@@ -75,6 +102,10 @@ public class Winkelwagen {
 		 boodschappen.add(boodschap);
 	 }
 	 boodschap.update(plaatsnr);
+	 if (boodschap.getGereserveerdePlaatsen().isEmpty()) {
+		 boodschappen.remove(boodschap);
+	 }
+	 berekenprijs();
   }
 
   public int aantalGereserveerd(Uitvoering uitvoering) throws TheaterException {
@@ -91,13 +122,28 @@ public class Winkelwagen {
 	  return aantalGereserveerd;
   }
   
+  public void schrijfWinkelwagenWeg(boolean idealBetaling) {
+	  klant.setSeizoentotaal(klant.getSeizoentotaal() + this.prijs);
+	  try {
+		  BestellingDAO bdao = BestellingDAO.getInstance();
+		  bdao.schrijf(this, idealBetaling);
+	  } catch (TheaterException e) {
+		  
+	  }
+  }
+  
   public String toString() {
 	  String winkelwagen = "";
 	  for (Boodschap b: boodschappen) {
 		  winkelwagen += b.toString() + "\n";
 	  }
-	  winkelwagen += berekenprijs();
-	  return winkelwagen;
+	  if (winkelwagen.length() > 0) {
+		winkelwagen += "________________________________________";
+		winkelwagen += "\n\nSubtotaal:\t\t" + prijs;
+		winkelwagen += "\nKorting:\t\t" + korting;
+		winkelwagen += "\nTotaal:\t\t" + berekenprijs();
+	}
+	return winkelwagen;
   }
 
 }

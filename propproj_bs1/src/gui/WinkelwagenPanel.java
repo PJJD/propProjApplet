@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import java.awt.Rectangle;
 import javax.swing.JLabel;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 import javax.swing.JScrollPane;
@@ -112,8 +114,16 @@ public class WinkelwagenPanel extends JPanel implements Observer {
       bevestigKnop = new JButton();
       bevestigKnop.setBounds(new Rectangle(11, 241, 274, 33));
       bevestigKnop.setText("Bevestig uw bestelling");
+      bevestigKnop.addActionListener(new KlikBevestigKnop());
     }
     return bevestigKnop;
+  }
+  
+  class KlikBevestigKnop implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+		  boolean idealBetaling = idealBox.isSelected();
+		  contr.schrijfWinkelwagenWeg(idealBetaling);
+	  }
   }
 
   /**
@@ -124,14 +134,18 @@ public class WinkelwagenPanel extends JPanel implements Observer {
   private JCheckBox getIdealBox() {
     if (idealBox == null) {
       idealBox = new JCheckBox();
-      idealBox.setBounds(new Rectangle(16, 206, 122, 21));
+      idealBox.setBounds(new Rectangle(16, 206, 170, 21));
       idealBox.setText("Betalen via Ideal");
     }
     return idealBox;
   }
 
   public void update(Observable obs, Object obj) {
-	  bestelArea.setText(contr.toonWinkelwagen());
+	  String rekening = "";
+	  String klant = contr.getKlantNaam();
+	  infoLabel.setText("Uw bestelling, " + klant);
+	  rekening += contr.toonWinkelwagen();
+	  bestelArea.setText(rekening);
   }
 
 

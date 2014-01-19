@@ -59,7 +59,13 @@ public class Boodschap {
 	  return voorstelling + "\t" + datum + " (" + gereserveerdePlaatsen.size() + " plaatsen)";
   }
   
-
+  public double berekenprijs() {
+	  double prijs = 0.0;
+	  for (Plaats p: gereserveerdePlaatsen) {
+		  prijs += uitvoering.getPrijs(p);
+	  }
+	  return prijs;
+  }
  
 
 }

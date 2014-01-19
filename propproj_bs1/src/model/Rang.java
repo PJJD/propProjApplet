@@ -28,6 +28,8 @@ public class Rang {
     this.prijs = prijs;
   }
   
-  
+  public String toString() {
+	  return this.naam + " " + this.prijs;
+  }
  
 }

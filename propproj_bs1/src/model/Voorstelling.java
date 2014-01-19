@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import db.VoorstellingDAO;
+
 /**
  * KLasse die een voorstelling representeert
  * 
@@ -21,6 +23,7 @@ public class Voorstelling {
   public Voorstelling() {
 	  super();
 	  this.uitvoeringen = new ArrayList<Uitvoering>();
+	  this.prijzen = new ArrayList<Rang>();
   }
   
   public void setNaam(String naam) {
@@ -43,6 +46,10 @@ public class Voorstelling {
 	  this.prijzen = prijzen;
   }
   
+  public ArrayList<Rang> getPrijzen() {
+	  return this.prijzen;
+  }
+  
   public int getVoorstellingnr() {
 	  return this.voorstellingnr;
   }
@@ -58,9 +65,13 @@ public class Voorstelling {
    * @param rang  de rang
    * @return prijs 
    */
-  public double getRangprijs(String rang) {
-    //TODO implementeer deze methode zodra je die nodig hebt 
-    return 0; 
+   public double getRangprijs(String rang) {
+		  for (Rang r: prijzen) {
+			  if (r.getNaam().equals(rang)) {
+				  return r.getPrijs();
+			  }
+		  }
+		  return 0.0;
    }
   
   // De klasse VoorstellingsDAO maakt gebruik van de onderstaande methode:
@@ -83,5 +94,5 @@ public class Voorstelling {
 	  return this.naam;
   }
   
-  
+
 }
