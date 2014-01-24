@@ -4,13 +4,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Observer;
 import java.util.Observable;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
-import db.PlaatsDAO;
 import db.TheaterException;
 import db.TheaterDAO;
 import db.VoorstellingDAO;
@@ -70,7 +68,6 @@ public class Controller extends Observable  {
 	  try {
 		  VoorstellingDAO vdao = VoorstellingDAO.getInstance();
 		  voorstellingen = vdao.getVoorstellingen();
-		  voorstelling = (Voorstelling) voorstellingen.toArray()[0];
 	  } catch (TheaterException e) {
 		  JOptionPane.showMessageDialog(null,  e.getMessage(), "Ophalen voorstellingen mislukt", 
 	              JOptionPane.ERROR_MESSAGE);
@@ -82,10 +79,16 @@ public class Controller extends Observable  {
   public ArrayList<Uitvoering> getUitvoeringen() {
 	  ArrayList<Uitvoering> uitvoeringLijst = null;
 	  ArrayList<Uitvoering> uitvoeringenToekomst = new ArrayList<Uitvoering>();
-	  uitvoeringLijst = voorstelling.getUitvoeringen();
+	  uitvoeringLijst = null;
 	  Date vandaag = new Date();
 	  Date datumUitvoering = null;
 	  SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+	  
+	  if (voorstelling != null) {
+		  uitvoeringLijst = voorstelling.getUitvoeringen();
+	  } else {
+		  return uitvoeringenToekomst;
+	  }
 
 	  for (Uitvoering u :uitvoeringLijst) {
 		  try {
@@ -152,6 +155,15 @@ public class Controller extends Observable  {
 	  return false;
   }
   
+  public void logKlantUit() {
+	  winkelwagen.maakLeeg();
+	  winkelwagen = null;
+	  voorstelling = null;
+	  uitvoering = null;
+	  setChanged();
+	  notifyObservers();
+  }
+  
   public String getKlantNaam() {
 	  String klantnaam ="";
 	  try {
@@ -206,7 +218,7 @@ public class Controller extends Observable  {
   }
   
   public void schrijfWinkelwagenWeg(boolean idealBetaling) {
-	  winkelwagen.schrijfWinkelwagenWeg(idealBetaling);
+	  winkelwagen.schrijfWeg(idealBetaling);
 	  winkelwagen = new Winkelwagen(this.winkelwagen.getKlant());
 	  setChanged();
 	  notifyObservers();
@@ -216,24 +228,5 @@ public class Controller extends Observable  {
   
   // Einde toegevoegde code
   
-//Test de controller 
- public static void main(String[] args) {
-   try {
-     Controller contr = new Controller();
-//     JOptionPane.showMessageDialog(null,  "Verbinding maken gelukt","OK",
-//         JOptionPane.INFORMATION_MESSAGE);
-     contr.getVoorstellingen();
-     contr.getUitvoeringen();
-     contr.uitvoering.getZaalbezetting();
-     contr.logKlantIn("testpj", "testpj");
-   }
-   catch (TheaterException e) {
-     JOptionPane.showMessageDialog(null,  e.getMessage(),"Fatale fout", 
-         JOptionPane.ERROR_MESSAGE);
-     e.printStackTrace();
-   }
-   
-   
- }
 
 }

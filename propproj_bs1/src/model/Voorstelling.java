@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import db.VoorstellingDAO;
 
 /**
  * KLasse die een voorstelling representeert

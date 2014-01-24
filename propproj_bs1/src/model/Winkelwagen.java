@@ -2,21 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 
 import db.BestellingDAO;
 import db.TheaterException;
-import db.KlantDAO;
 
 /**
- * Klasse die een winkelwagen representeert
+ * Klasse die een virtuele winkelwagen representeert
  * 
- * @author Medewerker OU
+ * @author Pieter-Jan Delaruelle
+ * 
  * 
  */
 public class Winkelwagen {
 
- 
   private Klant klant = null;
   private ArrayList<Boodschap> boodschappen = new ArrayList<Boodschap>();
   private double prijs = 0.0;
@@ -26,9 +24,18 @@ public class Winkelwagen {
 	  this.klant = k;
   }
   
+  /**
+   * Constructor die op basis van een gebruikersnaam en een wachtwoord 
+   * een winkelwagen aanmaakt
+   * 
+   * @param gebruikersnaam De gebruikersnaam van de klant waarvoor een winkelwagen moet worden aangemaakt
+   * @param wachtwoord Het wachtwoord van de klant waarvoor een winkelwagen moet worden aangemaakt
+   * @throws TheaterException Treedt op wanneer de klant niet kan worden opgehaald uit de databank
+   */
   public Winkelwagen(String gebruikersnaam, String wachtwoord) throws TheaterException {
 	  this.klant = Klant.getKlant(gebruikersnaam, wachtwoord);
   }
+
   public Klant getKlant() {
 	  return klant;
   }
@@ -45,7 +52,10 @@ public class Winkelwagen {
 	  this.boodschappen = boodschappen;
   }
 
-  
+  /**
+   * Methode voor het toevoegen van een boodschap aan de winkelwagen
+   * @param b De boodschap die aan de winkelwagen moet worden toegevoegd
+   */
   public void boodschapToevoegen(Boodschap b) {
 	  boodschappen.add(b);
   }
@@ -57,8 +67,10 @@ public class Winkelwagen {
  //Klasse BestellingDAO maakt gebruik van onderstaande methode. 
  
   /**
-   * Berekent de prijs van deze winkelwagen, inclusief eventuele korting
-   * @return de prijs
+   * Berekent de prijs van deze winkelwagen, inclusief eventuele korting.
+   * Indien nodig wordt het attribuut vasteKlant van de klant in kwestie ook aangepast.
+   * 
+   * @return De berekende prijs
    */
   public double berekenprijs()  {
 	  double kortingspercentage = Theater.getVasteklantkorting();
@@ -85,11 +97,17 @@ public class Winkelwagen {
 	  return prijs - korting;
   }
 
-
+  /**
+   * Update de winkelwagen aan de hand van de geselecteerde plaats en de uitvoering.
+   * Wanneer er voor de geselecteerde uitvoering nog geen Boodschap bestaat wordt deze aangemaakt. 
+   * Wanneer de laatse Plaats voor de geselecteerde uitvoering verwijderd wordt, wordt de boodschap voor de geselecteerde uitvoering ook uit de winkelwagen verwijderd.
+   * 
+   * @param plaatsnr De plaatsnr van de geselecteerde plaats
+   * @param uitvoering De geselecteerde uitvoering
+   * @throws TheaterException
+   */
   public void updateWinkelwagen(int plaatsnr, Uitvoering uitvoering) throws TheaterException {
 	 Boodschap boodschap = null;
-	 ArrayList<Plaats> gereserveerdePlaatsen = null;
-	 Plaats plaats = null;
 	 // Als er al een boodschap voor de huidige uitvoering in de winkelwagen zit halen we deze op
 	 for (Boodschap b: boodschappen) {
 		 if (b.getUitvoering() == uitvoering) {
@@ -107,29 +125,52 @@ public class Winkelwagen {
 	 }
 	 berekenprijs();
   }
-
+  
+  /**
+   * Deze methode geeft het aantal gereserveerde plaatsen voor de geselecteerde uitvoering weer.
+   * 
+   * @param uitvoering De geselecteerde uitvoering
+   * @return Het aantal reeds gereserveerde plaatsen voor de geselecteerde uitvoering.
+   * @throws TheaterException
+   */
   public int aantalGereserveerd(Uitvoering uitvoering) throws TheaterException {
 	  int aantalGereserveerd = 0;
-	  Boodschap boodschap = null;
 	  BestellingDAO bdao = BestellingDAO.getInstance();
 	  aantalGereserveerd = bdao.aantalKaarten(uitvoering, klant);
 	  for (Boodschap b: boodschappen) {
 		  if (b.getUitvoering() == uitvoering) {
-			  aantalGereserveerd += b.getGereserveerdePlaatsen().size();
+			  aantalGereserveerd += b.aantalGereserveerdePlaatsen();
 		  }
 	  }
 
 	  return aantalGereserveerd;
   }
   
-  public void schrijfWinkelwagenWeg(boolean idealBetaling) {
-	  klant.setSeizoentotaal(klant.getSeizoentotaal() + this.prijs);
+  /**
+   * Methode voor het wegschrijven van de winkelwagen in kwestie naar de databank.
+   * 
+   * @param idealBetaling Geeft aan of het al dan niet over een betaling via iDeal gaat
+   */
+  public void schrijfWeg(boolean idealBetaling) {
+	  double seizoenTotaal = klant.getSeizoentotaal();
+	  seizoenTotaal += this.prijs;
+	  klant.setSeizoentotaal(seizoenTotaal);
 	  try {
 		  BestellingDAO bdao = BestellingDAO.getInstance();
 		  bdao.schrijf(this, idealBetaling);
 	  } catch (TheaterException e) {
 		  
 	  }
+  }
+  
+  /**
+   * Maakt de winkelwagen leeg
+   */
+  public void maakLeeg() {
+	  this.boodschappen = null;
+	  this.klant = null;
+	  this.korting = 0.0;
+	  this.prijs = 0.0;
   }
   
   public String toString() {

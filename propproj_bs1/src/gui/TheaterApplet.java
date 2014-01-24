@@ -5,17 +5,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JApplet;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 import db.TheaterException;
 
 
-
-
-
 import java.awt.Rectangle;
 import model.Controller;
+
+@SuppressWarnings("serial")
 
 /**
  * GUI-klasse die mogelijkheid biedt online kaarten voor theater te
@@ -55,7 +52,7 @@ public class TheaterApplet extends JApplet {
 
   private void mijnInit() {
     jTabbedPane.setSelectedIndex(TheaterApplet.TOONVOORSTELLINGEN);
-    contr.logKlantIn("testpj", "testpj");
+
   }
 
   /**
@@ -99,4 +96,7 @@ public class TheaterApplet extends JApplet {
     }
     return jTabbedPane;
   }
+
+
+
 }

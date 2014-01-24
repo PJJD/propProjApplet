@@ -21,6 +21,9 @@ import javax.swing.event.ListSelectionListener;
 
 import java.awt.event.KeyEvent;
 
+import java.util.Observer;
+import java.util.Observable;
+
 import model.Voorstelling;
 
 /**
@@ -30,7 +33,7 @@ import model.Voorstelling;
  * @author Mederwerker OU
  * 
  */
-public class VoorstellingPanel extends JPanel {
+public class VoorstellingPanel extends JPanel implements Observer {
 
   private Controller contr = null;
 
@@ -60,12 +63,13 @@ public class VoorstellingPanel extends JPanel {
   }
 
   void mijnInit() {
+	  contr.addObserver(this);
 	  voorstellingList.setListData(contr.getVoorstellingen().toArray());
 	  uitvoeringList.setListData(contr.getUitvoeringen().toArray());
   }
   
 
-  /**
+  /*
    * This method initializes this
    * 
    * @return void
@@ -109,7 +113,7 @@ public class VoorstellingPanel extends JPanel {
    */
   private JList getVoorstellingList() {
     if (voorstellingList == null) {
-      voorstellingList = new JList();
+      voorstellingList = new JList<Voorstelling>();
       voorstellingList.addListSelectionListener(new VoorstellingSelectionListener());
     }
     return voorstellingList;
@@ -125,9 +129,7 @@ public class VoorstellingPanel extends JPanel {
 	  }
   }
   
-  private void updateVoorstellingList() {
-	  voorstellingList.setListData(contr.getVoorstellingen().toArray());
-  }
+
  
 
   /**
@@ -168,6 +170,11 @@ public class VoorstellingPanel extends JPanel {
  
   private void updateUitvoeringList() {
 	  uitvoeringList.setListData(contr.getUitvoeringen().toArray());
+  }
+  
+  public void update(Observable obs, Object obj) {
+	  String klantnaam = contr.getKlantNaam();
+	  naamLabel.setText("Welkom, " + klantnaam);
   }
 
 } // @jve:decl-index=0:visual-constraint="10,10"

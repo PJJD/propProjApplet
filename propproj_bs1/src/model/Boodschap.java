@@ -66,6 +66,10 @@ public class Boodschap {
 	  }
 	  return prijs;
   }
+  
+  public int aantalGereserveerdePlaatsen() {
+	  return gereserveerdePlaatsen.size();
+  }
  
 
 }

@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.Color;
 
-import javax.swing.JPanel;
-
 import model.Controller;
 
 import java.awt.GridLayout;
@@ -11,8 +9,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 
 import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import java.awt.Font;
 
@@ -44,9 +41,9 @@ public class ZaalPanel extends JPanel implements Observer {
   private Controller contr = null;
  
   private static final long serialVersionUID = 1L;
+  private static final String GEEN_UITVOERING = "Geen uitvoering geselecteerd";
   private JPanel plaatsenPanel = null;
   private JLabel infoLabel = null;
-  private JButton bevestigSelectieKnop = null;
   private JLabel uitvoeringnaamLabel = null;
 
   private JLabel podiumLabel = null;
@@ -101,7 +98,7 @@ public class ZaalPanel extends JPanel implements Observer {
     uitvoeringnaamLabel.setBounds(new Rectangle(13, 13, 525, 49));
     uitvoeringnaamLabel.setFont(new Font("Dialog", Font.BOLD, 14));
     uitvoeringnaamLabel
-        .setText("Zaalbezetting voor <naam en datum>  (dus de geselecteerde uitvoering)");
+        .setText(GEEN_UITVOERING);
     klantLabel = new JLabel();
     klantLabel.setBounds(new Rectangle(20, 10, 525, 15));
     klantLabel.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -142,25 +139,14 @@ public class ZaalPanel extends JPanel implements Observer {
     return plaatsenPanel;
   }
 
-  /**
-   * This method initializes bevestigSelectieKnop
-   * 
-   * @return javax.swing.JButton
-   */
-  private JButton getBevestigSelectieKnop() {
-    if (bevestigSelectieKnop == null) {
-      bevestigSelectieKnop = new JButton();
-      bevestigSelectieKnop.setBounds(new Rectangle(267, 453, 163, 30));
-      bevestigSelectieKnop.setText("bevestig selectie");
-      }
-    return bevestigSelectieKnop;
-  }
   
   public void update(Observable obs, Object obj) {
 	  String klantnaam = contr.getKlantNaam();
 	  if (klantnaam != "") {
 		  klantLabel.setText("Welkom, " + klantnaam);
-	  };
+	  } else {
+		  klantLabel.setText("");
+	  }
 	  mijnUpdate();
   }
   
@@ -169,7 +155,7 @@ public class ZaalPanel extends JPanel implements Observer {
 	  try {
 		  uitvoeringnaamLabel.setText("Zaalbezetting voor " + contr.getVoorstellingInfo() + " op " + contr.getUitvoeringInfo());
 	  } catch (NullPointerException e) {
-		  uitvoeringnaamLabel.setText("Geen uitvoering geselecteerd");
+		  uitvoeringnaamLabel.setText(GEEN_UITVOERING);
 	  }
 	  plaatsenPanel.removeAll();
 	  ArrayList<Plaats> plaatsen = null;

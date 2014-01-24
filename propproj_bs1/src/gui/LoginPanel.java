@@ -123,6 +123,13 @@ public class LoginPanel extends JPanel {
 		  }
 	  }
   }
+  
+  class LogoutListener implements ActionListener {
+	  public void actionPerformed(ActionEvent e) {
+		 contr.logKlantUit();
+		 toggleLoginLoguitKnop();
+	  }
+  }
 
   
   /**
@@ -171,6 +178,7 @@ public class LoginPanel extends JPanel {
       loguitKnop.setText("Log uit");
       loguitKnop.setEnabled(false);
       loguitKnop.setToolTipText("");
+      loguitKnop.addActionListener(new LogoutListener());
     }
     return loguitKnop;
   }

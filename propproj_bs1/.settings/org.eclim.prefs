@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+org.eclim.java.import.exclude=["^com.sun..*","^sunw?..*"]
+org.eclim.java.run.mainclass=gui.TheaterApplet
+org.eclim.user.email="pieterjan.delaruelle@gmail.com"
+org.eclim.user.name="Pieter-Jan Delaruelle"
